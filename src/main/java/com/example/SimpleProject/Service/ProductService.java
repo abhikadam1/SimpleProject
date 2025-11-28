@@ -33,10 +33,10 @@ public class ProductService
         return prodRepo.findById(prodId).orElse(new Product());
     }
 
-    public void addProduct(Product prod)
+    public Product addProduct(Product prod)
     {
 //        products.add(prod);
-        prodRepo.save(prod);
+        return prodRepo.save(prod);
     }
     public Product updateProduct(Product prod)
     {
