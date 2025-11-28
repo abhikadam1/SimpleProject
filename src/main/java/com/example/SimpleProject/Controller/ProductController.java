@@ -41,6 +41,10 @@ public class ProductController {
 
     @DeleteMapping("product/{prodId}")
     public Product deleteProduct(@PathVariable int prodId) {
+        System.out.println("delete product " + prodId);
+        if (prodId <= 0){
+            return  new Product();
+        }
         return productService.deleteProduct(prodId);
     }
 }
