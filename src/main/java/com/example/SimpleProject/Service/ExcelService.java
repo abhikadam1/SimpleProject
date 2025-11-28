@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.sql.Timestamp;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -73,7 +75,7 @@ import java.util.List;
 
             // Create Header Row
             Row header = sheet.createRow(0);
-            String[] columns = {"ID", "Name", "Use", "Price"};
+            String[] columns = {"ID", "Name", "Use", "Price", "Created Date"};
 
             for (int i = 0; i < columns.length; i++) {
                 Cell cell = header.createCell(i);
@@ -81,9 +83,15 @@ import java.util.List;
                 cell.setCellStyle(headerStyle);
             }
 
+            // Date formatter
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+            CellStyle dateStyle = workbook.createCellStyle();
+            CreationHelper createHelper = workbook.getCreationHelper();
+            dateStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy-MM-dd HH:mm:ss"));
+
             // Fetch data from DB
             List<Product> employees = productRepository.findAll();
-
             int rowIndex = 1;
             for (Product emp : employees) {
                 Row row = sheet.createRow(rowIndex);
@@ -91,10 +99,22 @@ import java.util.List;
                 row.createCell(1).setCellValue(emp.getProductName());
                 row.createCell(2).setCellValue("This is use of product " + rowIndex++);
                 row.createCell(3).setCellValue(emp.getPrice());
+
+//                // format created_on
+//                String createdOnFormatted = emp.getCreatedOn() != null
+//                        ? emp.getCreatedOn().format(formatter)
+//                        : "";
+//                row.createCell(4).setCellValue(createdOnFormatted);
+//
+//                row.createCell(4).setCellValue(emp.getCreatedOn());
+
+                Cell dateCell = row.createCell(4);
+                dateCell.setCellValue(Timestamp.valueOf(emp.getCreatedOn()));
+                dateCell.setCellStyle(dateStyle);
             }
 
 //            // Auto size columns
-//            for (int i = 0; i < 4; i++) {
+//            for (int i = 0; i < columns.length; i++) {
 //                sheet.autoSizeColumn(i);
 //            }
 
