@@ -30,13 +30,14 @@ public class ProductService
 //         return products.stream()
 //                 .filter(p -> p.getProductId() == prodId)
 //                 .findFirst().orElse(new  Product(0, "No Product Found", 0));
-        return prodRepo.findById(prodId).orElse(new Product());
+//        return prodRepo.findById(prodId).orElse(new Product());
+        return prodRepo.findById(prodId).orElse(null);
     }
 
-    public void addProduct(Product prod)
+    public Product addProduct(Product prod)
     {
 //        products.add(prod);
-        prodRepo.save(prod);
+        return prodRepo.save(prod);
     }
     public Product updateProduct(Product prod)
     {
