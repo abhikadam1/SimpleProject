@@ -20,6 +20,14 @@ public class ProductController {
     }
     @RequestMapping("/products")
     public List<Product> getProducts() {
+        int a = 8, b = 5;
+
+        b = 0;
+        if (b == 0) {
+            // This line triggers the @AfterThrowing advice
+            throw new ArithmeticException("Cannot divide by zero.");
+        }
+        float c = a / b;
         return productService.getProducts();
     }
 
