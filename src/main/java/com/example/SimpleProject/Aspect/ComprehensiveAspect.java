@@ -14,7 +14,7 @@ public class ComprehensiveAspect {
 
     // --- Define a single Pointcut Expression for reuse ---
 //    @Pointcut("execution(* com.example.SimpleProject.Controller.*.*(..))")
-    @Pointcut("execution(* com.example.SimpleProject.Controller.*.*(..))")
+    @Pointcut("execution(* com.example.SimpleProject.Controller.TempController.*(..))")
     public void serviceMethods() {}
 
     // 1. @Before Advice
